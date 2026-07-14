@@ -1,6 +1,6 @@
 # Chime Time
 
-Chime Time is a simple clock application that displays the current time and plays optional chimes.
+Chime Time is a simple client-side application built with React and Tailwind CSS that displays the current time with configurable chimes.
 
 ## Run Locally
 
