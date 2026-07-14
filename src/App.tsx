@@ -47,7 +47,7 @@ const Colon = () => (
 
 export default function App() {
   const [time, setTime] = useState(new Date());
-  const [chimeMode, setChimeMode] = useState<'off' | 15 | 30 | 60>(60);
+  const [chimeMode, setChimeMode] = useState<'off' | 15 | 30 | 60>('off');
   const [ntpOffset, setNtpOffset] = useState<number | null>(null);
   const [ntpLoading, setNtpLoading] = useState<boolean>(true);
   const [ntpError, setNtpError] = useState<boolean>(false);
