@@ -17,7 +17,7 @@ jobs:
   preview:
     if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
-    # environment: firebase # @upstream-issue https://firebase.uservoice.com/forums/948424-general/suggestions/51498368-firebase-init-hosting-github-environment-secret
+    environment: firebase # @upstream-issue https://firebase.uservoice.com/forums/948424-general/suggestions/51498368-firebase-init-hosting-github-environment-secret
     permissions:
       checks: write
       contents: read
@@ -48,7 +48,7 @@ jobs:
   live:
     if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
-    # environment: firebase # @upstream-issue https://firebase.uservoice.com/forums/948424-general/suggestions/51498368-firebase-init-hosting-github-environment-secret
+    environment: firebase # @upstream-issue https://firebase.uservoice.com/forums/948424-general/suggestions/51498368-firebase-init-hosting-github-environment-secret
     permissions:
       contents: read
     timeout-minutes: 10
