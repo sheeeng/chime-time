@@ -51,11 +51,12 @@ export default function App() {
   const [ntpOffset, setNtpOffset] = useState<number | null>(null);
   const [ntpLoading, setNtpLoading] = useState<boolean>(true);
   const [ntpError, setNtpError] = useState<boolean>(false);
+  const [ntpSource, setNtpSource] = useState<'ntp' | 'http' | null>(null);
   const [hideUI, setHideUI] = useState<boolean>(false);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const lastCheckedMinute = useRef<number>(new Date().getMinutes());
 
-  // Formatting time gracefully adapting to the user's local timezone & locale
+  // Formatting time gracefully adapting to the user's local timezone & locale.
   const formatParts = new Intl.DateTimeFormat(undefined, {
     hour: 'numeric',
     minute: '2-digit',
@@ -89,7 +90,7 @@ export default function App() {
     return `${(absMs / 3600000).toFixed(1)} hours`;
   };
 
-  // Time & Chime Interval Effect
+  // Time & Chime Interval Effect.
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date(Date.now());
@@ -101,10 +102,10 @@ export default function App() {
         const minPart = parts.find(p => p.type === 'minute')?.value;
         if (minPart) currentMinute = parseInt(minPart, 10);
       } catch (e) {
-        // Fallback to local minute
+        // Fallback to local minute.
       }
 
-      // Check if we transitioned to a new minute to trigger the chime
+      // Check if we transitioned to a new minute to trigger the chime.
       if (chimeMode !== 'off') {
         if (currentMinute !== lastCheckedMinute.current) {
           if (currentMinute % chimeMode === 0) {
@@ -114,32 +115,49 @@ export default function App() {
       }
       
       lastCheckedMinute.current = currentMinute;
-    }, 200); // 200ms ensures we capture the second change crisply
+    }, 200); // 200ms ensures we capture the second change crisply.
     
     return () => clearInterval(timer);
   }, [chimeMode]);
 
-  // Fetch NTP Offset
+  // Fetch NTP Offset.
   useEffect(() => {
     const fetchNtpOffset = async () => {
       setNtpLoading(true);
       setNtpError(false);
+
+      // Try real NTP via backend (works in dev / self-hosted).
       try {
         const start = Date.now();
         const res = await fetch('/api/ntp?server=2.pool.ntp.org');
-        if (!res.ok) throw new Error('ntppool failed');
+        if (!res.ok) throw new Error('no ntp backend');
         const data = await res.json();
-        const serverTime = data.time;
-        
         const end = Date.now();
         const latency = (end - start) / 2;
-        const localTime = start + latency;
-        const offset = serverTime - localTime;
-        
+        const offset = data.time - (start + latency);
         setNtpOffset(offset);
+        setNtpSource('ntp');
+        setNtpLoading(false);
+        return;
+      } catch {
+        // Fall through to HTTP fallback.
+      }
+
+      // Fallback: read the Date response header from the server (works on Vercel/Netlify).
+      try {
+        const t1 = Date.now();
+        const res = await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
+        const t2 = Date.now();
+        const dateHeader = res.headers.get('Date');
+        if (!dateHeader) throw new Error('no Date header');
+        const serverTime = new Date(dateHeader).getTime();
+        const latency = (t2 - t1) / 2;
+        const offset = serverTime - (t1 + latency);
+        setNtpOffset(offset);
+        setNtpSource('http');
         setNtpLoading(false);
       } catch (err) {
-        console.error('Failed to fetch NTP time:', err);
+        console.error('Failed to sync time:', err);
         setNtpError(true);
         setNtpLoading(false);
       }
@@ -165,7 +183,7 @@ export default function App() {
       ctx.resume();
     }
     
-    // Generates a soft, pleasant 2-tone bell
+    // Generates a soft, pleasant 2-tone bell.
     const playNote = (freq: number, delay: number) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -184,8 +202,8 @@ export default function App() {
       osc.stop(ctx.currentTime + delay + 2);
     };
 
-    playNote(523.25, 0); // C5 Note
-    playNote(659.25, 0.4); // E5 Note
+    playNote(523.25, 0); // C5 note.
+    playNote(659.25, 0.4); // E5 note.
   };
 
   return (
@@ -241,7 +259,7 @@ export default function App() {
                 {ntpOffset !== null && !ntpLoading && !ntpError && (
                    <div className="flex flex-col items-center gap-1 text-center max-w-xl mx-auto">
                      <span className="leading-relaxed md:leading-normal">
-                       The time difference is <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">{formatDuration(ntpOffset)}</code> {ntpOffset > 0 ? 'behind' : 'ahead of'} <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">2.pool.ntp.org</code> server.
+                       The time difference is <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">{formatDuration(ntpOffset)}</code> {ntpOffset > 0 ? 'behind' : 'ahead of'} <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">{ntpSource === 'ntp' ? '2.pool.ntp.org' : 'this server'}</code>.
                      </span>
                    </div>
                 )}

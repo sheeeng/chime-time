@@ -7,14 +7,14 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  // Real NTP query using Node's dgram (UDP)
+  // Real NTP query using Node's dgram (UDP).
   app.get("/api/ntp", async (req, res) => {
     try {
       const server = (req.query.server as string) || "2.pool.ntp.org";
       
       const client = dgram.createSocket("udp4");
       const ntpData = Buffer.alloc(48);
-      // LI = 0 (no warning), VN = 3 (IPv4 only), Mode = 3 (Client)
+      // LI = 0 (no warning), VN = 3 (IPv4 only), Mode = 3 (Client).
       ntpData[0] = 0x1b;
 
       const timeout = setTimeout(() => {
@@ -26,12 +26,12 @@ async function startServer() {
         clearTimeout(timeout);
         client.close();
 
-        // Offset in seconds between Jan 1, 1900 and Jan 1, 1970
+        // Offset in seconds between Jan 1, 1900 and Jan 1, 1970.
         const offset = 2208988800;
         
-        // Receive timestamp is at bytes 32-39
-        // Transmit timestamp is at bytes 40-47
-        // We'll use the transmit timestamp (when server sent the packet)
+        // Receive timestamp is at bytes 32-39.
+        // Transmit timestamp is at bytes 40-47.
+        // We'll use the transmit timestamp (when server sent the packet).
         const intPart = msg.readUInt32BE(40);
         const fractPart = msg.readUInt32BE(44);
         
@@ -58,7 +58,7 @@ async function startServer() {
     }
   });
 
-  // Vite middleware for development
+  // Vite middleware for development.
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
