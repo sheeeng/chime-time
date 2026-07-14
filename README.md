@@ -1,20 +1,46 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Chime Time
 
-# Run and deploy your AI Studio app
-
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/260e2406-bb17-4273-bb64-713c0b92718c
+Chime Time is a simple clock application that displays the current time and plays optional chimes.
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
+1. Clone the repository.
 
+    ```shell
+    git clone https://github.com/sheeeng/chime-time.git
+    cd chime-time
+    ```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+2. Install [just](https://github.com/casey/just).
+
+3. Install dependencies.
+
+    ```shell
+    just install
+    ```
+
+4. Run the development server.
+
+    ```shell
+    just dev
+    ```
+
+5. Open your browser and navigate to the URL provided in the terminal.
+
+    `http://localhost:3000`
+
+### Alternative
+
+If you prefer not to install [`just`](https://github.com/casey/just), use [`npm`](https://github.com/npm/cli) directly.
+
+1. Install dependencies.
+
+    `npm install`
+
+2. Run the development server.
+
+    `npm run dev`
+
+3. Open your browser and navigate to the URL provided in the terminal.
+
+    `http://localhost:3000`
