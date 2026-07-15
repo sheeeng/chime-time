@@ -30,6 +30,13 @@
       ],
       "description": "Ignore npm dependencies as they are handled by Dependabot.",
       "enabled": false
+    },
+    {
+      "matchManagers": [
+        "swift"
+      ],
+      "description": "Ignore Swift dependencies as they are handled by Dependabot.",
+      "enabled": false
     }
   ]
 }

@@ -22,3 +22,14 @@ updates:
     labels:
       - "dependencies"
     open-pull-requests-limit: 5
+  - package-ecosystem: "swift"
+    directory: "/.agents/skills/xcode-project-setup/scripts/xcode_spm_setup"
+    schedule:
+      interval: "daily"
+    groups:
+      swift:
+        patterns:
+          - "*"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 5
