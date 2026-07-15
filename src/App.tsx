@@ -113,10 +113,10 @@ export default function App() {
           }
         }
       }
-      
+
       lastCheckedMinute.current = currentMinute;
     }, 200); // 200ms ensures we capture the second change crisply.
-    
+
     return () => clearInterval(timer);
   }, [chimeMode]);
 
@@ -182,22 +182,22 @@ export default function App() {
     if (ctx.state === 'suspended') {
       ctx.resume();
     }
-    
+
     // Generates a soft, pleasant 2-tone bell.
     const playNote = (freq: number, delay: number) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      
+
       osc.type = 'sine';
       osc.frequency.value = freq;
-      
+
       gain.gain.setValueAtTime(0, ctx.currentTime + delay);
       gain.gain.linearRampToValueAtTime(0.15, ctx.currentTime + delay + 0.05);
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 2);
-      
+
       osc.connect(gain);
       gain.connect(ctx.destination);
-      
+
       osc.start(ctx.currentTime + delay);
       osc.stop(ctx.currentTime + delay + 2);
     };
@@ -210,7 +210,7 @@ export default function App() {
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 flex flex-col font-sans transition-colors duration-500 selection:bg-indigo-500/30">
       {/* Header */}
       {!hideUI && (
-        <motion.header 
+        <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -224,7 +224,7 @@ export default function App() {
       )}
 
       {/* Clock Canvas */}
-      <motion.main 
+      <motion.main
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
@@ -250,7 +250,7 @@ export default function App() {
           <div className="mt-8 md:mt-12 text-lg sm:text-2xl text-zinc-500 dark:text-zinc-400 font-medium tracking-wide flex flex-col items-center gap-2">
             <span>{dateString}</span>
           </div>
-          
+
           {!hideUI && (
             <div className="mt-4 text-xs sm:text-sm text-zinc-400 dark:text-zinc-500 tracking-wide flex flex-col items-center justify-center gap-3 transition-opacity duration-500">
               <div className="flex items-center gap-2">
@@ -271,7 +271,7 @@ export default function App() {
 
       {/* Settings Footer */}
       {!hideUI && (
-        <motion.footer 
+        <motion.footer
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
@@ -289,7 +289,7 @@ export default function App() {
                 { mode: 30, label: 'Half-Hourly' },
                 { mode: 60, label: 'Hourly' }
               ] as const).map(({ mode, label }) => (
-                <motion.button 
+                <motion.button
                    key={mode}
                    whileHover={{ scale: 1.02 }}
                    whileTap={{ scale: 0.95 }}
@@ -302,8 +302,8 @@ export default function App() {
                      }
                    }}
                    className={`relative flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-xl text-sm font-semibold transition-colors duration-200 z-10 ${
-                     chimeMode === mode 
-                       ? 'text-zinc-900 dark:text-white' 
+                     chimeMode === mode
+                       ? 'text-zinc-900 dark:text-white'
                        : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50'
                    }`}
                 >
@@ -339,4 +339,3 @@ export default function App() {
     </div>
   );
 }
-
