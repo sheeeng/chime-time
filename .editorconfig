@@ -42,3 +42,8 @@ keep_padding       = true
 # --func-next-line
 function_next_line = false
 minify             = false
+
+[{src,scripts}/**.{ts,tsx,js,jsx,css,scss}]
+indent_style = space
+indent_size = 2
+quote_type = single
