@@ -328,8 +328,9 @@ export default function App() {
                 rel="noopener noreferrer"
                 className="text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 underline underline-offset-2 transition-colors"
               >
-                Leonard.
+                Leonard
               </a>
+              .
             </p>
           </div>
         </motion.footer>
