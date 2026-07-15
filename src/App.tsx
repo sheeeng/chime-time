@@ -58,7 +58,7 @@ export default function App() {
 
   // Formatting time gracefully adapting to the user's local timezone & locale.
   const formatParts = new Intl.DateTimeFormat(undefined, {
-    hour: 'numeric',
+    hour: '2-digit',
     minute: '2-digit',
     second: '2-digit'
   }).formatToParts(time);
