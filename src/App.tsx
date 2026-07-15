@@ -257,11 +257,11 @@ export default function App() {
                 {ntpLoading && <span>Syncing with NTP...</span>}
                 {ntpError && <span className="text-red-400/80">Failed to sync NTP.</span>}
                 {ntpOffset !== null && !ntpLoading && !ntpError && (
-                   <div className="flex flex-col items-center gap-1 text-center max-w-xl mx-auto">
-                     <span className="leading-relaxed md:leading-normal">
-                       The time difference is <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">{formatDuration(ntpOffset)}</code> {ntpOffset > 0 ? 'behind' : 'ahead of'} <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">{ntpSource === 'ntp' ? '2.pool.ntp.org' : 'this server'}</code>.
-                     </span>
-                   </div>
+                  <div className="flex flex-col items-center gap-1 text-center max-w-xl mx-auto">
+                    <span className="leading-relaxed md:leading-normal">
+                      The time difference is <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">{formatDuration(ntpOffset)}</code> {ntpOffset > 0 ? 'behind' : 'ahead of'} <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">{ntpSource === 'ntp' ? '2.pool.ntp.org' : 'this server'}</code>.
+                    </span>
+                  </div>
                 )}
               </div>
             </div>
@@ -279,8 +279,8 @@ export default function App() {
         >
           <div className="flex flex-col items-center p-6 bg-white dark:bg-zinc-900 rounded-3xl w-full max-w-2xl shadow-xl shadow-zinc-200/50 dark:shadow-none border border-zinc-200/60 dark:border-zinc-800 transition-all duration-300">
             <div className="flex items-center gap-2 mb-4 text-zinc-500 dark:text-zinc-400">
-               {chimeMode !== 'off' ? <Bell className="w-5 h-5" /> : <BellOff className="w-5 h-5" />}
-               <span className="font-semibold uppercase tracking-widest text-xs">Chime Interval</span>
+              {chimeMode !== 'off' ? <Bell className="w-5 h-5" /> : <BellOff className="w-5 h-5" />}
+              <span className="font-semibold uppercase tracking-widest text-xs">Chime Interval</span>
             </div>
             <div className="relative flex flex-wrap justify-center bg-zinc-100 dark:bg-zinc-950 rounded-2xl p-1.5 w-full sm:w-auto border border-zinc-200 dark:border-zinc-800">
               {([
@@ -290,39 +290,38 @@ export default function App() {
                 { mode: 60, label: 'Hourly' }
               ] as const).map(({ mode, label }) => (
                 <motion.button
-                   key={mode}
-                   whileHover={{ scale: 1.02 }}
-                   whileTap={{ scale: 0.95 }}
-                   onClick={(e) => {
-                     e.stopPropagation();
-                     setChimeMode(mode);
-                     if (mode !== 'off') {
-                       initAudio();
-                       playChime();
-                     }
-                   }}
-                   className={`relative flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-xl text-sm font-semibold transition-colors duration-200 z-10 ${
-                     chimeMode === mode
-                       ? 'text-zinc-900 dark:text-white'
-                       : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50'
-                   }`}
+                  key={mode}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setChimeMode(mode);
+                    if (mode !== 'off') {
+                      initAudio();
+                      playChime();
+                    }
+                  }}
+                  className={`relative flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-xl text-sm font-semibold transition-colors duration-200 z-10 ${chimeMode === mode
+                    ? 'text-zinc-900 dark:text-white'
+                    : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50'
+                    }`}
                 >
-                   {chimeMode === mode && (
-                     <motion.div
-                       layoutId="chime-mode-active"
-                       className="absolute inset-0 bg-white dark:bg-zinc-800 rounded-xl shadow-sm ring-1 ring-black/5 dark:ring-white/10"
-                       transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                       style={{ zIndex: -1 }}
-                     />
-                   )}
-                   {label}
+                  {chimeMode === mode && (
+                    <motion.div
+                      layoutId="chime-mode-active"
+                      className="absolute inset-0 bg-white dark:bg-zinc-800 rounded-xl shadow-sm ring-1 ring-black/5 dark:ring-white/10"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      style={{ zIndex: -1 }}
+                    />
+                  )}
+                  {label}
                 </motion.button>
               ))}
             </div>
           </div>
           <div className="pt-8 pb-4 text-center text-xs text-slate-400 dark:text-slate-500">
             <p>
-              Made with 💚 by{' '}
+              Made with 💚 by{' '}.
               <a
                 href="https://github.com/sheeeng/chime-time"
                 target="_blank"
