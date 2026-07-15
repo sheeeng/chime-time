@@ -23,6 +23,13 @@
       ],
       "description": "Ignore GitHub Actions dependencies as they are handled by Dependabot.",
       "enabled": false
+    },
+    {
+      "matchManagers": [
+        "npm"
+      ],
+      "description": "Ignore npm dependencies as they are handled by Dependabot.",
+      "enabled": false
     }
   ]
 }
