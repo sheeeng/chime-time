@@ -44,3 +44,7 @@ If you prefer not to install [`just`](https://github.com/casey/just), use [`npm`
 3. Open your browser and navigate to the URL provided in the terminal.
 
     `http://localhost:3000`
+
+## License
+
+Licensed under [`Apache-2.0 OR MIT`](https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions/#d42-disjunctive-or-operator).
