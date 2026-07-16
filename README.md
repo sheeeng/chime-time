@@ -47,4 +47,8 @@ If you prefer not to install [`just`](https://github.com/casey/just), use [`npm`
 
 ## License
 
-Licensed under [`Apache-2.0 OR MIT`](https://spdx.github.io/spdx-spec/v2.3/SPDX-license-expressions/#d42-disjunctive-or-operator).
+This work is dual licensed under the Apache License 2.0 and the MIT License.
+
+You may choose either license when you use this work.
+
+`SPDX-License-Identifier: Apache-2.0 OR MIT`
