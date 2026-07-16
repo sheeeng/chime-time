@@ -1,8 +1,23 @@
 # Chime Time
 
-Chime Time is a simple client-side application built with React and Tailwind CSS that displays the current time with configurable chimes.
+Chime Time is a React and TypeScript web application that displays an
+animated digital clock synchronized to network time. It plays soft
+audio chimes at configurable intervals and shows the offset between
+your system clock and the NTP server. An embedded Express server
+handles NTP queries over UDP and serves the application in both
+development and production.
+
+## Features
+
+- Animated digit display using smooth spring transitions
+- System clock synchronized against an NTP server
+- Configurable chime intervals: quarterly, half-hourly, or hourly
+- Responsive layout that adapts to any screen size
+- Light and dark theme support via system preference
 
 ## Run Locally
+
+### With just
 
 1. Clone the repository.
 
@@ -25,29 +40,51 @@ Chime Time is a simple client-side application built with React and Tailwind CSS
     just dev
     ```
 
-5. Open your browser and navigate to the URL provided in the terminal.
+5. Open your browser and navigate to the URL shown in the terminal.
 
     `http://localhost:3000`
 
-### Alternative
+### With npm
 
-If you prefer not to install [`just`](https://github.com/casey/just), use [`npm`](https://github.com/npm/cli) directly.
+If you prefer not to install [just](https://github.com/casey/just),
+use [npm](https://github.com/npm/cli) directly.
 
-1. Install dependencies.
+1. Clone the repository.
 
-    `npm install`
+    ```shell
+    git clone https://github.com/sheeeng/chime-time.git
+    cd chime-time
+    ```
 
-2. Run the development server.
+2. Install dependencies.
 
-    `npm run dev`
+    ```shell
+    npm install
+    ```
 
-3. Open your browser and navigate to the URL provided in the terminal.
+3. Run the development server.
+
+    ```shell
+    npm run dev
+    ```
+
+4. Open your browser and navigate to the URL shown in the terminal.
 
     `http://localhost:3000`
+
+## Technology Stack
+
+- [React](https://react.dev) 19
+- [TypeScript](https://www.typescriptlang.org)
+- [Tailwind CSS](https://tailwindcss.com) version 4
+- [Vite](https://vitejs.dev) 8
+- [Express](https://expressjs.com) 5
+- [motion](https://motion.dev) for animations
+- [Lucide React](https://lucide.dev) for icons
 
 ## License
 
-This work is dual licensed under the Apache License 2.0 and the MIT License.
+This work is dual licensed under the [Apache License 2.0](LICENSE-APACHE) and the [MIT License](LICENSE-MIT).
 
 You may choose either license when you use this work.
 
