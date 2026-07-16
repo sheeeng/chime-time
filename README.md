@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: Apache-2.0 OR MIT -->
+
 # Chime Time
 
 Chime Time is a simple client-side application built with React and Tailwind CSS that displays the current time with configurable chimes.
