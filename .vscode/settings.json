@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    "**/.agents": true,
+    "**/.claude": true,
+    "**/node_modules": true
+  }
+}
