@@ -45,6 +45,14 @@ If you prefer not to install [`just`](https://github.com/casey/just), use [`npm`
 
     `http://localhost:3000`
 
+## Deployments
+
+- [chime-time-b834eba7.firebaseapp.com](https://chime-time-b834eba7.firebaseapp.com/)
+- [chime-time-b834eba7.web.app](https://chime-time-b834eba7.web.app/)
+- [chime-time.netlify.app](https://chime-time.netlify.app/)
+- [chime-time.vercel.app](https://chime-time.vercel.app/)
+- [sheeeng.github.io/chime-time](https://sheeeng.github.io/chime-time/)
+
 ## License
 
 This work is dual licensed under the [Apache License 2.0](LICENSE-APACHE) and the [MIT License](LICENSE-MIT).
