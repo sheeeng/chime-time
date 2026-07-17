@@ -333,8 +333,9 @@ export default function App() {
               >
                 Leonard
               </a>
-              .{commitSha && <>{' '}<span className="font-mono">{commitSha}</span></>}
+              .
             </p>
+            {commitSha && <p className="font-mono">Version: {commitSha}</p>}
           </div>
         </motion.footer>
       )}
