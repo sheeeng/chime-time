@@ -335,7 +335,7 @@ export default function App() {
               </a>
               .
             </p>
-            {commitSha && <p className="font-mono">Version: {commitSha}</p>}
+            {commitSha && <p>Version: <span className="font-mono">{commitSha}</span></p>}
           </div>
         </motion.footer>
       )}
