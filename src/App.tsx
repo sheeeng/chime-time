@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { useState, useEffect, useRef } from 'react';
 import { Bell, BellOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -44,6 +45,8 @@ const Colon = () => (
     :
   </motion.span>
 );
+
+const commitSha = import.meta.env.VITE_GIT_COMMIT_SHA_8_CHAR as string | undefined;
 
 export default function App() {
   const [time, setTime] = useState(new Date());
@@ -330,7 +333,7 @@ export default function App() {
               >
                 Leonard
               </a>
-              .
+              .{commitSha && <>{' '}<span className="font-mono">{commitSha}</span></>}
             </p>
           </div>
         </motion.footer>

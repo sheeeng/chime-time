@@ -21,5 +21,11 @@ jobs:
     - name: Install Dependencies
       run: npm ci
 
+    - name: Set Build Information
+      id: set-build-information
+      run: echo "commit_sha_8_char=${GITHUB_SHA:0:8}" >> "$GITHUB_OUTPUT"
+
     - name: Build
       run: npm run build
+      env:
+        VITE_GIT_COMMIT_SHA_8_CHAR: ${{ steps.set-build-information.outputs.commit_sha_8_char }}
