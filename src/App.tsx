@@ -324,7 +324,7 @@ export default function App() {
           </div>
           <div className="pt-8 pb-4 text-center text-xs text-slate-400 dark:text-slate-500">
             <p>
-              Made with 💚 by{' '}
+              Built from <span className="font-mono">{commitSha ?? 'dev'}</span>. Made with 💚 by{' '}
               <a
                 href="https://github.com/sheeeng/chime-time"
                 target="_blank"
@@ -335,7 +335,6 @@ export default function App() {
               </a>
               .
             </p>
-            {commitSha && <p>Version: <span className="font-mono">{commitSha}</span></p>}
           </div>
         </motion.footer>
       )}
