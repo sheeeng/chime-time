@@ -39,14 +39,16 @@ const NumberTicker = ({ value }: { value: string }) => (
 const Colon = () => (
   <motion.span
     animate={{ opacity: [1, 0.2, 1] }}
-    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
     className="inline-block mx-0.5 md:mx-1 -translate-y-[0.05em] text-zinc-300 dark:text-zinc-700"
   >
     :
   </motion.span>
 );
 
-const commitSha = import.meta.env.VITE_GIT_COMMIT_SHA_8_CHAR as string | undefined;
+const commitSha = import.meta.env.VITE_GIT_COMMIT_SHA_8_CHAR as
+  | string
+  | undefined;
 
 export default function App() {
   const [time, setTime] = useState(new Date());
@@ -63,7 +65,7 @@ export default function App() {
   const formatParts = new Intl.DateTimeFormat(undefined, {
     hour: '2-digit',
     minute: '2-digit',
-    second: '2-digit'
+    second: '2-digit',
   }).formatToParts(time);
 
   let hour = '';
@@ -82,7 +84,7 @@ export default function App() {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
-    year: 'numeric'
+    year: 'numeric',
   }).format(time);
 
   const formatDuration = (ms: number) => {
@@ -101,8 +103,10 @@ export default function App() {
 
       let currentMinute = now.getMinutes();
       try {
-        const parts = new Intl.DateTimeFormat('en-US', { minute: 'numeric' }).formatToParts(now);
-        const minPart = parts.find(p => p.type === 'minute')?.value;
+        const parts = new Intl.DateTimeFormat('en-US', {
+          minute: 'numeric',
+        }).formatToParts(now);
+        const minPart = parts.find((p) => p.type === 'minute')?.value;
         if (minPart) currentMinute = parseInt(minPart, 10);
       } catch (e) {
         // Fallback to local minute.
@@ -149,7 +153,10 @@ export default function App() {
       // Fallback: read the Date response header from the server (works on Vercel/Netlify).
       try {
         const t1 = Date.now();
-        const res = await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
+        const res = await fetch(window.location.href, {
+          method: 'HEAD',
+          cache: 'no-store',
+        });
         const t2 = Date.now();
         const dateHeader = res.headers.get('Date');
         if (!dateHeader) throw new Error('no Date header');
@@ -171,7 +178,8 @@ export default function App() {
 
   const initAudio = () => {
     if (!audioCtxRef.current) {
-      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      const AudioContext =
+        window.AudioContext || (window as any).webkitAudioContext;
       audioCtxRef.current = new AudioContext();
     }
     if (audioCtxRef.current.state === 'suspended') {
@@ -196,7 +204,10 @@ export default function App() {
 
       gain.gain.setValueAtTime(0, ctx.currentTime + delay);
       gain.gain.linearRampToValueAtTime(0.15, ctx.currentTime + delay + 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 2);
+      gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        ctx.currentTime + delay + 2,
+      );
 
       osc.connect(gain);
       gain.connect(ctx.destination);
@@ -216,12 +227,14 @@ export default function App() {
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
           className="p-6 flex items-center justify-between"
         >
           <div className="flex items-center gap-2.5 text-zinc-800 dark:text-zinc-200">
             <LogoIcon className="w-6 h-6" />
-            <span className="text-xl font-semibold tracking-tight">Chime Time</span>
+            <span className="text-xl font-semibold tracking-tight">
+              Chime Time
+            </span>
           </div>
         </motion.header>
       )}
@@ -230,7 +243,7 @@ export default function App() {
       <motion.main
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
+        transition={{ duration: 1, ease: 'easeOut', delay: 0.1 }}
         className="flex-1 flex flex-col items-center justify-center p-6 sm:p-12 w-full cursor-pointer"
         onClick={() => setHideUI(!hideUI)}
         title="Click to toggle full-screen clock."
@@ -258,11 +271,21 @@ export default function App() {
             <div className="mt-4 text-xs sm:text-sm text-zinc-400 dark:text-zinc-500 tracking-wide flex flex-col items-center justify-center gap-3 transition-opacity duration-500">
               <div className="flex items-center gap-2">
                 {ntpLoading && <span>Syncing with NTP...</span>}
-                {ntpError && <span className="text-red-400/80">Failed to sync NTP.</span>}
+                {ntpError && (
+                  <span className="text-red-400/80">Failed to sync NTP.</span>
+                )}
                 {ntpOffset !== null && !ntpLoading && !ntpError && (
                   <div className="flex flex-col items-center gap-1 text-center max-w-xl mx-auto">
                     <span className="leading-relaxed md:leading-normal">
-                      The time difference is <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">{formatDuration(ntpOffset)}</code> {ntpOffset > 0 ? 'behind' : 'ahead of'} <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">{ntpSource === 'ntp' ? '2.pool.ntp.org' : 'this server'}</code>.
+                      The time difference is{' '}
+                      <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">
+                        {formatDuration(ntpOffset)}
+                      </code>{' '}
+                      {ntpOffset > 0 ? 'behind' : 'ahead of'}{' '}
+                      <code className="bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 rounded text-zinc-600 dark:text-zinc-300">
+                        {ntpSource === 'ntp' ? '2.pool.ntp.org' : 'this server'}
+                      </code>
+                      .
                     </span>
                   </div>
                 )}
@@ -277,21 +300,29 @@ export default function App() {
         <motion.footer
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
           className="p-6 pb-12 flex flex-col items-center gap-6"
         >
           <div className="flex flex-col items-center p-6 bg-white dark:bg-zinc-900 rounded-3xl w-full max-w-2xl shadow-xl shadow-zinc-200/50 dark:shadow-none border border-zinc-200/60 dark:border-zinc-800 transition-all duration-300">
             <div className="flex items-center gap-2 mb-4 text-zinc-500 dark:text-zinc-400">
-              {chimeMode !== 'off' ? <Bell className="w-5 h-5" /> : <BellOff className="w-5 h-5" />}
-              <span className="font-semibold uppercase tracking-widest text-xs">Chime Interval</span>
+              {chimeMode !== 'off' ? (
+                <Bell className="w-5 h-5" />
+              ) : (
+                <BellOff className="w-5 h-5" />
+              )}
+              <span className="font-semibold uppercase tracking-widest text-xs">
+                Chime Interval
+              </span>
             </div>
-            <div className="relative flex flex-wrap justify-center bg-zinc-100 dark:bg-zinc-950 rounded-2xl p-1.5 w-full sm:w-auto border border-zinc-200 dark:border-zinc-800">
-              {([
-                { mode: 'off', label: 'Off' },
-                { mode: 15, label: 'Quarterly' },
-                { mode: 30, label: 'Half-Hourly' },
-                { mode: 60, label: 'Hourly' }
-              ] as const).map(({ mode, label }) => (
+            <div className="relative flex flex-wrap justify-center bg-zinc-100 dark:bg-zinc-800/60 rounded-2xl p-1.5 w-full sm:w-auto border border-zinc-200 dark:border-zinc-700">
+              {(
+                [
+                  { mode: 'off', label: 'Off' },
+                  { mode: 15, label: 'Quarterly' },
+                  { mode: 30, label: 'Half-Hourly' },
+                  { mode: 60, label: 'Hourly' },
+                ] as const
+              ).map(({ mode, label }) => (
                 <motion.button
                   key={mode}
                   whileHover={{ scale: 1.02 }}
@@ -304,16 +335,21 @@ export default function App() {
                       playChime();
                     }
                   }}
-                  className={`relative flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-xl text-sm font-semibold transition-colors duration-200 z-10 ${chimeMode === mode
-                    ? 'text-zinc-900 dark:text-white'
-                    : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50'
-                    }`}
+                  className={`relative flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-xl text-sm font-semibold transition-colors duration-200 z-10 ${
+                    chimeMode === mode
+                      ? 'text-zinc-900 dark:text-white'
+                      : 'text-zinc-500 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/50 dark:hover:bg-zinc-700/50'
+                  }`}
                 >
                   {chimeMode === mode && (
                     <motion.div
                       layoutId="chime-mode-active"
-                      className="absolute inset-0 bg-white dark:bg-zinc-800 rounded-xl shadow-sm ring-1 ring-black/5 dark:ring-white/10"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      className="absolute inset-0 bg-white dark:bg-zinc-700 rounded-xl shadow-sm ring-1 ring-black/5 dark:ring-white/10"
+                      transition={{
+                        type: 'spring',
+                        bounce: 0.2,
+                        duration: 0.6,
+                      }}
                       style={{ zIndex: -1 }}
                     />
                   )}
@@ -324,7 +360,8 @@ export default function App() {
           </div>
           <div className="pt-8 pb-4 text-center text-xs text-slate-400 dark:text-slate-500">
             <p>
-              Built from <span className="font-mono">{commitSha ?? 'dev'}</span>. Made with 💚 by{' '}
+              Built from <span className="font-mono">{commitSha ?? 'dev'}</span>
+              . Made with 💚 by{' '}
               <a
                 href="https://github.com/sheeeng/chime-time"
                 target="_blank"
